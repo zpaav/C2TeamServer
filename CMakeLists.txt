@@ -18,6 +18,25 @@ find_package(ZLIB REQUIRED)
 find_package(spdlog REQUIRED)
 find_package(httplib REQUIRED)
 
+
+##
+## libssh2 for SshExec
+##
+
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)         # <- makes static libs PIC
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)  # libssh2 as static
+set(BUILD_TESTING OFF CACHE BOOL "" FORCE)      # no libssh2 tests
+
+include(FetchContent) 
+set(LIBSSH2_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(LIBSSH2_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+FetchContent_Declare(
+  libssh2
+  GIT_REPOSITORY https://github.com/libssh2/libssh2.git
+  GIT_TAG libssh2-1.11.1
+)
+FetchContent_MakeAvailable(libssh2)
+
 include_directories(${CMAKE_INCLUDE_PATH})
 
 
